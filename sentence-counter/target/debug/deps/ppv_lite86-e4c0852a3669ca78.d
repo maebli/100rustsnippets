@@ -1,0 +1,11 @@
+/Volumes/data/4_github/learn-rust/100-rust-snippets/sentence-counter/target/debug/deps/ppv_lite86-e4c0852a3669ca78.rmeta: /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/lib.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/soft.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/types.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/x86_64/mod.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/x86_64/sse2.rs
+
+/Volumes/data/4_github/learn-rust/100-rust-snippets/sentence-counter/target/debug/deps/libppv_lite86-e4c0852a3669ca78.rlib: /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/lib.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/soft.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/types.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/x86_64/mod.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/x86_64/sse2.rs
+
+/Volumes/data/4_github/learn-rust/100-rust-snippets/sentence-counter/target/debug/deps/ppv_lite86-e4c0852a3669ca78.d: /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/lib.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/soft.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/types.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/x86_64/mod.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/x86_64/sse2.rs
+
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/lib.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/soft.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/types.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/x86_64/mod.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.14/src/x86_64/sse2.rs:
