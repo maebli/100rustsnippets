@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/calculateUpLinkDataMIC.iml" filepath="$PROJECT_DIR$/calculateUpLinkDataMIC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/calculate_up_link_data_mic.iml" filepath="$PROJECT_DIR$/calculate_up_link_data_mic.iml" />
     </modules>
   </component>
 </project>
