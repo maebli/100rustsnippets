@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Volumes/data/4_github/learn-rust/100-rust-snippets/calculateUpLinkDataMIC/target/debug/build/typenum-6817ce1a8ca6efc9/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/Volumes/data/4_github/learn-rust/100-rust-snippets/calculateUpLinkDataMIC/target/debug/build/typenum-6817ce1a8ca6efc9/out/op.rs
