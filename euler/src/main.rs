@@ -1,7 +1,10 @@
+use std::ops::Range;
+
 fn main() {
     euler1();
     euler2();
     euler3();
+    euler4();
 }
 
 fn euler1(){
@@ -55,4 +58,60 @@ fn trial_division(n:u64) -> Vec<u64>{
         }
     }
     v
+}
+
+
+fn euler4(){
+
+    let mut largest_prod = 0;
+    let mut prod ;
+
+    const RANGE: Range<u64> = 100..1000;
+
+    for x in RANGE {
+        for y in RANGE {
+            prod =x*y;
+
+            if prod > largest_prod && is_palindrome(prod){
+                largest_prod = prod;
+
+            }
+        }
+    }
+
+    println!("largest palindrome which is product of two three digit numbers = {}",largest_prod)
+}
+
+#[test]
+fn test_is_palindrome(){
+    assert!(!is_palindrome(99002275));
+    assert!(is_palindrome(332233));
+    assert!(is_palindrome(332233332233));
+    assert!(is_palindrome(99999999));
+    assert!(!is_palindrome(94));
+    assert!(!is_palindrome(994));
+    assert!(!is_palindrome(12345678));
+    assert!(!is_palindrome(971198));
+    assert!(!is_palindrome(963342));
+
+}
+
+fn is_palindrome(x:u64) -> bool{
+    let mut s = x.to_string();
+
+    while s.len() >= 2 {
+        if s.ends_with(s.chars().nth(0).unwrap()) {
+            if s.len() == 2 {
+                return s.chars().nth(0) == s.chars().nth(1)
+            }
+            s.remove(0);
+            s.remove(s.len()-1);
+            println!("{}",s)
+        }else{
+            return false
+        }
+
+    }
+
+    false
 }
