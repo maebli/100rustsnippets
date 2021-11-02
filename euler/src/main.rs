@@ -106,7 +106,6 @@ fn is_palindrome(x:u64) -> bool{
             }
             s.remove(0);
             s.remove(s.len()-1);
-            println!("{}",s)
         }else{
             return false
         }
