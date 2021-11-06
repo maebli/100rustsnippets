@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["lorawan_project_structure_2"];

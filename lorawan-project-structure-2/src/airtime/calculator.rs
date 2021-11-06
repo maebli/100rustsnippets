@@ -63,7 +63,7 @@ impl Modulation{
         ((1<<self.spreading_factor) * 1000_000 / self.bandwidth) as f64
     }
     fn get_preamble_duration(&self,preamble_length:u64) -> f64{
-        ((100.0 * preamble_length as f64 + 425.0) / 100.0 * self.get_symbol_duration())
+        (100.0 * preamble_length as f64 + 425.0) / 100.0 * self.get_symbol_duration()
     }
 }
 
@@ -84,42 +84,47 @@ fn test_get_payload_symbol_count(){
     assert_eq!(23,f.get_payload_symbol_count())
 }
 
+#[cfg(test)]
+mod tests {
 
-#[test]
-fn test_get_preamble_duration(){
-    let mut m=Modulation{
-        spreading_factor: 12,
-        bandwidth: 125
-    };
-    assert_eq!(401408_000.0,m.get_preamble_duration(8));
-}
+    use super::*;
 
-#[test]
-fn test_get_symbol_duration(){
-    let mut m=Modulation{
-        spreading_factor: 12,
-        bandwidth: 125
-    };
-    assert_eq!(32768_000.0,m.get_symbol_duration());
-    m.spreading_factor = 9;
-    assert_eq!(4096_000.0,m.get_symbol_duration());
-    m.bandwidth = 500;
-    assert_eq!(1024_000.0,m.get_symbol_duration());
-}
-
-#[test]
-fn test_airtime_calculation(){
-    let f = FrameMetaInformation{
-        payload_length: 13,
-        preamble_length: 8,
-        is_header_enabled: true,
-        is_low_data_rate_optimization_enabled: false,
-        modulation: Modulation{
+    #[test]
+    fn test_get_preamble_duration() {
+        let m = Modulation {
             spreading_factor: 12,
             bandwidth: 125
-        },
-        coding_rate: CodingRates::CodingRate45,
-    };
+        };
+        assert_eq!(401408_000.0, m.get_preamble_duration(8));
+    }
 
-    assert_eq!(1_155_072_1000,f.get_airtime() as u64);
+    #[test]
+    fn test_get_symbol_duration() {
+        let mut m = Modulation {
+            spreading_factor: 12,
+            bandwidth: 125
+        };
+        assert_eq!(32768_000.0, m.get_symbol_duration());
+        m.spreading_factor = 9;
+        assert_eq!(4096_000.0, m.get_symbol_duration());
+        m.bandwidth = 500;
+        assert_eq!(1024_000.0, m.get_symbol_duration());
+    }
+
+    #[test]
+    fn test_airtime_calculation() {
+        let f = FrameMetaInformation {
+            payload_length: 13,
+            preamble_length: 8,
+            is_header_enabled: true,
+            is_low_data_rate_optimization_enabled: false,
+            modulation: Modulation {
+                spreading_factor: 12,
+                bandwidth: 125
+            },
+            coding_rate: CodingRates::CodingRate45,
+        };
+
+        assert_eq!(1_155_072_000, f.get_airtime() as u64);
+    }
 }
