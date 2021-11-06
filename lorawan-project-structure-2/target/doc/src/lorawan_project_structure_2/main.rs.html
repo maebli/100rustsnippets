@@ -15,12 +15,6 @@
 <span id="13">13</span>
 <span id="14">14</span>
 <span id="15">15</span>
-<span id="16">16</span>
-<span id="17">17</span>
-<span id="18">18</span>
-<span id="19">19</span>
-<span id="20">20</span>
-<span id="21">21</span>
 </pre><pre class="rust">
 <span class="kw">mod</span> <span class="ident">airtime</span>;
 <span class="kw">mod</span> <span class="ident">applayer</span>;
@@ -30,18 +24,12 @@
 <span class="kw">mod</span> <span class="ident">sensitivity</span>;
 
 <span class="kw">use</span> <span class="ident">airtime::calculator</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::airtime::calculator</span>::{<span class="ident">CodingRates</span>, <span class="ident">FrameMetaInformation</span>};
+
+
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::airtime::calculator</span>::{<span class="ident">CodingRates</span>, <span class="ident">FrameMetaInformation</span>, <span class="ident">Modulation</span>};
 
 <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">FrameMetaInformation</span>{
-        <span class="ident">payload_length</span>: <span class="number">13</span>,
-        <span class="ident">preamble_length</span>: <span class="number">8</span>,
-        <span class="ident">is_header_enabled</span>: <span class="bool-val">true</span>,
-        <span class="ident">is_low_data_rate_optimization_enabled</span>: <span class="bool-val">false</span>,
-        <span class="ident">spreading_factor</span>: <span class="number">12</span>,
-        <span class="ident">coding_rate</span>: <span class="ident">CodingRates::CodingRate45</span>,
-        <span class="ident">bandwidth</span>: <span class="number">125</span>
-    };
+
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="lorawan_project_structure_2" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

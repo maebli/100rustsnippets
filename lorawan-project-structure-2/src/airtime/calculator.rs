@@ -1,6 +1,15 @@
+//! Functionality Calculating Airtime of LoRaWAN Packets
+//!
+//! This ports [](https://github.com/brocaar/lorawan/blob/master/airtime/airtime.go)
+//!
+//! This implements the formula as defined by:
+//! [](/https://www.semtech.com/uploads/documents/LoraDesignGuide_STD.pdf)
+//!
 use std::cmp::max;
 pub type CodingRate=u32;
 
+
+/// List of all available coding rates
 pub enum CodingRates{
     CodingRate45,
     CodingRate46,
@@ -8,11 +17,13 @@ pub enum CodingRates{
     CodingRate48
 }
 
+/// LoRaWAN Modulation Information
 pub struct Modulation {
     pub(crate) spreading_factor:u64,
     pub(crate) bandwidth:u64
 }
 
+///  Information required to calculate Airtime
 pub struct FrameMetaInformation {
     pub(crate) payload_length:u64,
     pub(crate) preamble_length:u64,
@@ -34,6 +45,25 @@ impl CodingRates{
     }
 }
 
+/// # Airtime Calculation
+///   This calculates how long it will take for a packet to be sent
+///   depending on the Frame Meta Data
+///
+/// # Example
+///   ~~~
+///   let f = FrameMetaInformation{
+///         payload_length: 13,
+///         preamble_length: 0,
+///         is_header_enabled: true,
+///         is_low_data_rate_optimization_enabled: false,
+///         modulation: Modulation {
+///             spreading_factor: 12,
+///             bandwidth: 0
+///         },
+///         coding_rate: CodingRates::CodingRate45
+///     };
+///     assert_eq!(23,f.get_payload_symbol_count())
+///     ~~~
 impl FrameMetaInformation{
 
     pub(crate) fn get_airtime(&self) -> u64{

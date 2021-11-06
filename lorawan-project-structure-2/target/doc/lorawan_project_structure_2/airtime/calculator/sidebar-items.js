@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["CodingRates","List of all available coding rates"]],"struct":[["FrameMetaInformation","Information required to calculate Airtime"],["Modulation","LoRaWAN Modulation Information"]],"type":[["CodingRate",""]]});
