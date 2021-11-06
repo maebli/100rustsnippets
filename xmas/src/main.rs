@@ -7,14 +7,14 @@ fn main() {
         "Collie birds","Golden rings","Geese a-laying","Swans a-swimming ","Maids a-milking",
         "Pipers piping ","Drummers drumming ","Lords a-leaping ","Ladies dancing "];
 
-    for num in 1..12{
+    for num in 0..12{
         println!("On the {} day of Christmas my true love gave to me",PLACINGS[num]);
         for x in (1..(num)).rev() {
             println!("{} {}",NUMBERS[x],THINGS[x]);
         }
 
         match num {
-            1 => print!("A "),
+            0 => print!("A "),
             _ => print!("And a ")
         }
         println!("{}\n",THINGS[0]);
