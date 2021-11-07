@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>hello-wasm example</title>
+  </head>
+  <body>
+    <script type="module">
+      import init, {crc16_en_13757} from "./pkg/crc16_en_13757.js";
+      init()
+        .then(() => {
+          const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+          var input = genRanHex(5
+          0000000);
+          let before = Date.now();
+          var crc16=crc16_en_13757(input);
+          let after = Date.now();
+          alert(after-before);
+        });
+    </script>
+  </body>
+</html>
