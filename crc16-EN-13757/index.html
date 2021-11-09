@@ -5,18 +5,26 @@
     <title>hello-wasm example</title>
   </head>
   <body>
-    <script type="module">
+  <script type="module">
       import init, {crc16_en_13757} from "./pkg/crc16_en_13757.js";
       init()
         .then(() => {
           const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
-          var input = genRanHex(5
-          0000000);
-          let before = Date.now();
+          var input = genRanHex(50);
           var crc16=crc16_en_13757(input);
-          let after = Date.now();
-          alert(after-before);
         });
-    </script>
+    document.getElementById('calculate').addEventListener('click', () => {
+      var x=crc16_en_13757(document.getElementById('inputstring').value);
+      document.getElementById("output").innerText=x;
+    });
+   </script>
+  <form>
+    <label for="inputstring">Input String:</label><br>
+    <textarea rows="5" cols="80" id="inputstring"></textarea><br>
+    <input id="calculate" type="button" value="clickme" />
+  </form><br>
+  Result:<br>
+  <div id="output"></div>
+
   </body>
 </html>
