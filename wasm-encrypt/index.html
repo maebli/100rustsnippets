@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="module">
+    import init, {encrypt,decrypt} from "./pkg/wasm_encrypt.js";
+	      init()
+	        .then(() => {
+                var input = "hello";
+                var output = encrypt(input);
+                console.log(output);
+                var output2 = decrypt(output);
+                console.log(output2);
+	        });
+</script>
+</body>
+</html>
