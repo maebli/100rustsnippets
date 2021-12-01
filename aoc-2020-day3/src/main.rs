@@ -1,7 +1,5 @@
 fn main() {
 
-    assert_eq!(1592662500,);
-
     println!("{}",INPUT.lines()
                 .enumerate()
                 .filter(|x| { (x.0%2 == 0) && (x.1.chars().nth((x.0/2)%31).unwrap() == '#')})
