@@ -1,3 +1,4 @@
+use std::cmp;
 use std::cmp::Ordering;
 
 fn main() {
@@ -5,13 +6,13 @@ fn main() {
     let lines:Vec<Line>=INPUT
         .lines()
         .map(|x|{Line::from(x)})
-        .filter(|x| { x.is_horizontal() | x.is_vertical()})
+        // Uncomment for challenge 1 result
+        //.filter(|x|{x.is_horizontal()|x.is_vertical()})
         .collect();
 
     let mut d = SquareMap::of_size(MAX_X_AND_Y_COORDINATE);
 
     d.consume_lines(lines);
-
 
     println!("{}",d.danger_point_count());
 }
@@ -29,7 +30,7 @@ impl SquareMap {
     }
 
     pub fn increment_danger(& mut self, p:Point){
-        let i =( p.x+p.y*(self.size as u32) ) as usize;
+        let i =( p.x + p.y * (self.size as u32) ) as usize;
         self.fields[i]+=1;
     }
 
@@ -37,31 +38,13 @@ impl SquareMap {
 
         let g = l.gradient();
 
-        let range = match 0.cmp(&g.x) {
-            Ordering::Less => l.start.x..(l.end.x + 1),
-            Ordering::Greater => (l.end.x)..(l.start.x + 1),
-            _ => 0..0
-        };
-
-
         let mut p = l.start;
 
-        for x in range {
-            p.x = x;
-            SquareMap::increment_danger(self, p);
+        for _ in 0..(l.length()+1) {
+            SquareMap::increment_danger(self,p);
+            p.x = (p.x as i32 + g.x) as u32;
+            p.y = (p.y as i32 + g.y) as u32;
         }
-
-        let range = match 0.cmp(&g.y) {
-            Ordering::Less => l.start.y..(l.end.y + 1),
-            Ordering::Greater => (l.end.y)..(l.start.y + 1),
-            _ => 0..0
-        };
-
-        for y in range {
-            p.y = y;
-            SquareMap::increment_danger(self, p);
-        }
-
 
     }
 
@@ -110,10 +93,33 @@ impl Line {
         Line{ start: Point::from(a.0), end: Point::from(a.1) }
     }
 
-    fn gradient(&self) -> Gradient{
-        Gradient{ x: self.end.x as i32 - self.start.x as i32,
-            y: self.end.y as i32 - self.start.y as i32
+    fn gradient(&self) -> Gradient {
+
+        let dx = self.end.x as i32 - self.start.x as i32;
+        let dy  = self.end.y as i32 - self.start.y as i32;
+
+        let dx = match 0.cmp(&dx) {
+            Ordering::Less => 1,
+            Ordering::Greater => -1,
+            _ => 0
+        };
+
+        let dy = match 0.cmp(&dy) {
+            Ordering::Less => 1,
+            Ordering::Greater => -1,
+            _ => 0
+        };
+
+        Gradient{
+            x: dx,
+            y: dy
         }
+    }
+
+    fn length(&self) -> u32 {
+        cmp::max((self.end.x as i32 - self.start.x as i32).abs(),
+            (self.end.y as i32 - self.start.y as i32).abs()) as u32
+
     }
 
     fn is_horizontal(&self) ->bool {
@@ -125,7 +131,7 @@ impl Line {
     }
 }
 
-const MAX_X_AND_Y_COORDINATE:usize = 10;
+const MAX_X_AND_Y_COORDINATE:usize = 10; // change to 1000 for challenge input
 const INPUT:&str = "0,9 -> 5,9
 8,0 -> 0,8
 9,4 -> 3,4
