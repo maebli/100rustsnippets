@@ -14,7 +14,7 @@ fn main() {
 
     d.consume_lines(lines);
 
-    println!("{}",d.danger_point_count());
+    println!("{:?}",d);
 }
 
 #[derive(Debug)]
