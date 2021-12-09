@@ -27,7 +27,7 @@ fn main() {
     let sol1:u32=x.iter()
         .filter(|x|x.0)
         .map(|x|x.1)
-        .fold(0,|acc,inst|{acc+inst+1});
+        .fold(0,|acc,inst|{acc+inst as u32 +1});
 
     println!("{:?}",sol1);
 
