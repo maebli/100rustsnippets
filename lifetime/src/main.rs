@@ -1,13 +1,11 @@
-
 // Boilerplate for my singleton example
 struct A;
-static THING:A = A{};
+static THING: A = A {};
 fn getInstance() -> &'static A {
     &THING
 }
 
 fn main() {
-
     {
         // The following two lines are identical
         // due to static lifetime elision both
@@ -45,11 +43,9 @@ fn main() {
         // can no longer be used, but the data remains in the binary.
     }
 
-
     {
         // Implementing the singleton pattern
         let _a = getInstance();
         let _b = getInstance();
     }
-
 }
