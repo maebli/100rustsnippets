@@ -1,5 +1,5 @@
 
-// Boilerplate for my singelton example
+// Boilerplate for my singleton example
 struct A;
 static THING:A = A{};
 fn getInstance() -> &'static A {
@@ -17,10 +17,12 @@ fn main() {
 
         // The following will add three string literals
         // to the memory of the binary
-        let _a = X1;
-        let _b = X1;
-        let _c = X1;
+        let a = X1;
+        let b = X1;
+        let c = X2;
 
+        assert_eq!(b.as_ptr(), a.as_ptr());
+        assert_eq!(b.as_ptr(), c.as_ptr());
         // When  these constants go out of scope, their references
         // can no longer be used, but the data remains in the binary.
     }
@@ -33,9 +35,12 @@ fn main() {
         // The following will add three references
         // non mutable borrows to X1 and NOT three
         // three new string literals to the binary
-        let _a = X1;
-        let _b = X1;
-        let _c = X1;
+        let a = X1;
+        let b = X1;
+        let c = X2;
+
+        assert_eq!(b.as_ptr(), a.as_ptr());
+        assert_eq!(b.as_ptr(), c.as_ptr());
         // When  these constants go out of scope, their references
         // can no longer be used, but the data remains in the binary.
     }
