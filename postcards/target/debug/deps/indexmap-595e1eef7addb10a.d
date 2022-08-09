@@ -1,0 +1,13 @@
+/Volumes/data/4_github/learn-rust/100-rust-snippets/postcards/target/debug/deps/indexmap-595e1eef7addb10a.rmeta: /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/lib.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/macros.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/equivalent.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/mutable_keys.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/util.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/map.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/map/core.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/map/core/raw.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/set.rs
+
+/Volumes/data/4_github/learn-rust/100-rust-snippets/postcards/target/debug/deps/indexmap-595e1eef7addb10a.d: /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/lib.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/macros.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/equivalent.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/mutable_keys.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/util.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/map.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/map/core.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/map/core/raw.rs /Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/set.rs
+
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/lib.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/macros.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/equivalent.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/mutable_keys.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/util.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/map.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/map/core.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/map/core/raw.rs:
+/Users/michael/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.1/src/set.rs:
