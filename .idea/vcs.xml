@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/binding-javascript" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/celcius2fahrnenheit" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/fibonacci" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/web-scrapper" vcs="Git" />
+  </component>
+</project>
