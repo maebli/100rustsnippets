@@ -8,11 +8,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4eb781fd-dcf9-48aa-9a54-0437670d7bf1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/binding-javascript/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/binding-javascript/.idea/misc.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/binding-javascript/.idea/modules.xml" afterDir="false" />
@@ -21,8 +16,8 @@
       <change afterPath="$PROJECT_DIR$/binding-javascript/binding-javascript.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/binding-javascript/js/main.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/fibonacci/.idea/fibonacci.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/telegram-bot.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/web-scrapper/what2eat.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
