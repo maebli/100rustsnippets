@@ -1,0 +1,14 @@
+[package]
+name = "examples"
+version = "0.1.0"
+publish = false
+authors = ["Alex Martens <alex@thinglab.org>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+defmt = "0.3"
+defmt-rtt = "0.3"
+cortex-m-rt = "0.7"
+panic-probe = { version = "0.3", features = ["print-defmt" ] }
+stm32wlxx-hal = { path = "../hal", features = ["stm32wl5x_cm4", "rt", "defmt"] }

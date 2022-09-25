@@ -1,0 +1,35 @@
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+runner = "probe-run --chip STM32WLE5JCIx --connect-under-reset"
+rustflags = [
+  "-C", "link-arg=-Tlink.x",
+  "-C", "link-arg=-Tdefmt.x",
+]
+
+[alias]
+# e.g. cargo run-ex gpio-blink
+run-ex = "run -p examples --target thumbv7em-none-eabi --example"
+
+# e.g.
+# cargo test-aes
+# cargo test-subghz -- --probe 001D00145553500A20393256
+# cargo test-subghz -- --probe 001600345553500A20393256
+test-adc = "test -p testsuite --target thumbv7em-none-eabi --bin adc"
+test-aes = "test -p testsuite --target thumbv7em-none-eabi --bin aes"
+test-dac = "test -p testsuite --target thumbv7em-none-eabi --bin dac"
+test-flash = "test -p testsuite --target thumbv7em-none-eabi --bin flash"
+test-i2c = "test -p testsuite --target thumbv7em-none-eabi --bin i2c"
+test-info = "test -p testsuite --target thumbv7em-none-eabi --bin info"
+test-lptim = "test -p testsuite --target thumbv7em-none-eabi --bin lptim"
+test-pka = "test -p testsuite --target thumbv7em-none-eabi --bin pka"
+test-rcc = "test -p testsuite --target thumbv7em-none-eabi --bin rcc"
+test-rng = "test -p testsuite --target thumbv7em-none-eabi --bin rng"
+test-rtc = "test -p testsuite --target thumbv7em-none-eabi --bin rtc"
+test-spi = "test -p testsuite --target thumbv7em-none-eabi --bin spi"
+test-subghz = "test -p testsuite --target thumbv7em-none-eabi --bin subghz"
+test-uart = "test -p testsuite --target thumbv7em-none-eabi --bin uart"
+
+# e.g. cargo unit
+unit = "test --features stm32wl5x_cm4,chrono,embedded-time"
+unit-little = "test --features stm32wl5x_cm0p,chrono,embedded-time"
+unit-nucleo = "test -p nucleo-wl55jc-bsp --features stm32wl5x_cm4"
+unit-lora-e5 = "test -p lora-e5-bsp"

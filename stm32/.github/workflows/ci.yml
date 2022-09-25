@@ -1,0 +1,257 @@
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+  # allows manual triggering
+  workflow_dispatch:
+
+name: CI
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    env: {"RUSTFLAGS": "-D warnings"}
+    strategy:
+      matrix:
+        target:
+          - "thumbv6m-none-eabi"
+          - "thumbv7em-none-eabi"
+        mcu:
+          - "stm32wl5x_cm0p"
+          - "stm32wl5x_cm4"
+          - "stm32wle5"
+        toolchain:
+          - "1.60" # MSRV
+          - "beta"
+        exclude:
+          - mcu: "stm32wl5x_cm0p"
+            target: "thumbv7em-none-eabi"
+          - mcu: "stm32wl5x_cm4"
+            target: "thumbv6m-none-eabi"
+          - mcu: "stm32wle5"
+            target: "thumbv6m-none-eabi"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          target: ${{ matrix.target }}
+
+      - name: Build HAL
+        run: |
+          cargo build \
+          --target ${{ matrix.target }} \
+          --features ${{ matrix.mcu }}
+
+      - name: Build NUCLEO BSP
+        if: ${{ startsWith(matrix.mcu, 'stm32wl5x') }}
+        run: |
+          cargo build \
+          --package nucleo-wl55jc-bsp \
+          --target ${{ matrix.target }} \
+          --features ${{ matrix.mcu }},defmt
+
+      - name: Build LoRa E5 BSP
+        if: ${{ matrix.mcu == 'stm32wle5' }}
+        run: |
+          cargo build \
+          --package lora-e5-bsp \
+          --target ${{ matrix.target }} \
+          --features defmt
+
+      - name: Build Examples
+        if: ${{ matrix.mcu == 'stm32wl5x_cm4' }}
+        run: cargo build --examples -p examples --target ${{ matrix.target }}
+
+  build_testsuite:
+    name: Build Testsuite
+    runs-on: ubuntu-latest
+    env:
+      # setting this overrides environment variables used for linking
+      # RUSTFLAGS: "-D warnings"
+      DEFMT_LOG: "debug"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          target: thumbv7em-none-eabi
+      - run: |
+          cargo test -p testsuite --target thumbv7em-none-eabi --bins --locked --no-run
+      - name: Upload test binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-bins
+          if-no-files-found: error
+          retention-days: 1
+          path: |
+            target/thumbv7em-none-eabi/debug/deps/*
+            !target/thumbv7em-none-eabi/debug/deps/*.cargo-lock
+            !target/thumbv7em-none-eabi/debug/deps/*.d
+            !target/thumbv7em-none-eabi/debug/deps/*.meta
+            !target/thumbv7em-none-eabi/debug/deps/*.rlib
+            !target/thumbv7em-none-eabi/debug/deps/*.rmeta
+            !target/thumbv7em-none-eabi/debug/deps/.fingerprint/**/*
+            !target/thumbv7em-none-eabi/debug/deps/build/**/*
+            !target/thumbv7em-none-eabi/debug/deps/deps/**/*
+            !target/thumbv7em-none-eabi/debug/deps/examples/**/*
+            !target/thumbv7em-none-eabi/debug/deps/incremental/**/*
+
+  run_testsuite:
+    name: Run Testsuite
+    runs-on: self-hosted
+    needs:
+      - build_testsuite
+    steps:
+      - uses: actions/checkout@v3
+      - name: Display probe-run version
+        run: probe-run --version
+      - name: List probes
+        run: probe-run --list-probes
+      - uses: actions/download-artifact@v3
+        with:
+          name: test-bins
+          path: bins
+      - name: Run on-target tests
+        timeout-minutes: 5
+        run: |
+          python3 testsuite/runall.py --elf-dir bins \
+          002900205553500A20393256 \
+          0034001A5553500B20393256
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    env: {"RUSTFLAGS": "-D warnings"}
+    strategy:
+      matrix:
+        mcu:
+          - "stm32wl5x_cm0p"
+          - "stm32wl5x_cm4"
+          - "stm32wle5"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Test HAL
+        run: cargo test --features ${{ matrix.mcu }},embedded-time,chrono
+
+      - name: Test nucleo BSP
+        if: ${{ startsWith(matrix.mcu, 'stm32wl5x') }}
+        run: |
+          cargo test -p nucleo-wl55jc-bsp --features ${{ matrix.mcu }},embedded-time,chrono
+
+      - name: Test LoRa E5 BSP
+        if: ${{ matrix.mcu == 'stm32wle5' }}
+        run: cargo test -p lora-e5-bsp --features embedded-time,chrono
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      # not using clippy-check due to this issue:
+      # https://github.com/actions-rs/clippy-check/issues/2
+      - run: cargo clippy --features stm32wl5x_cm4 -- --deny warnings
+
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    env: {"RUSTFLAGS": "-D warnings"}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rustfmt
+      - run: cargo +nightly fmt -- --check
+
+  doc:
+    name: doc
+    runs-on: ubuntu-latest
+    env: {"RUSTDOCFLAGS": "-D warnings"}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+      # not run in parallel to avoid hitting concurrency limit
+      # stm32wl5x_cm4 covered by rustdoc
+      - run: cargo doc --features stm32wl5x_cm0p
+      - run: cargo doc --features stm32wle5
+
+  rustdoc:
+    name: rustdoc
+    runs-on: ubuntu-latest
+    env: {"RUSTDOCFLAGS": "-D warnings --cfg docsrs"}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@nightly
+      - name: rustdoc
+        run: |
+          cd hal
+          cargo +nightly rustdoc \
+          --features chrono,embedded-time,rt,stm32wl5x_cm4 \
+          -- -Z unstable-options --enable-index-page
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: target/doc
+
+  deploy_rustdoc:
+    name: Deploy Nightly Docs
+    runs-on: ubuntu-latest
+    needs: rustdoc
+    if: ${{ github.ref == 'refs/heads/main' }}
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
+        id: deployment
+
+  release:
+    name: crates.io release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - build
+      - build_testsuite
+      - clippy
+      - doc
+      - format
+      - rustdoc
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Release stm32wlxx-hal
+        run: |
+          cd hal
+          cargo publish --no-verify --token ${CRATES_IO_TOKEN}
+          cd ..
+        env:
+          CRATES_IO_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
+      - name: Release nucleo-wl55jc-bsp
+        run: |
+          cd nucleo-wl55jc-bsp
+          cargo publish --no-verify --token ${CRATES_IO_TOKEN}
+          cd ..
+        env:
+          CRATES_IO_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
+      - name: Release lora-e5-bsp
+        run: |
+          cd lora-e5-bsp
+          cargo publish --no-verify --token ${CRATES_IO_TOKEN}
+          cd ..
+        env:
+          CRATES_IO_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}

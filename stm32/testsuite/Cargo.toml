@@ -1,0 +1,101 @@
+[package]
+authors = [
+    "Alex Martens <alex@thinglab.org>",
+    "Jorge I. <jorge@jorgeig.com>"
+]
+name = "testsuite"
+publish = false
+edition = "2021"
+version = "0.1.0"
+license = "MIT OR Apache-2.0"
+
+[[bin]]
+name = "adc"
+path = "src/adc.rs"
+harness = false
+
+[[bin]]
+name = "aes"
+path = "src/aes.rs"
+harness = false
+
+[[bin]]
+name = "dac"
+path = "src/dac.rs"
+harness = false
+
+[[bin]]
+name = "flash"
+path = "src/flash.rs"
+harness = false
+
+[[bin]]
+name = "i2c"
+path = "src/i2c.rs"
+harness = false
+
+[[bin]]
+name = "info"
+path = "src/info.rs"
+harness = false
+
+[[bin]]
+name = "lptim"
+path = "src/lptim.rs"
+harness = false
+
+[[bin]]
+name = "pka"
+path = "src/pka.rs"
+harness = false
+
+[[bin]]
+name = "rcc"
+path = "src/rcc.rs"
+harness = false
+
+[[bin]]
+name = "rng"
+path = "src/rng.rs"
+harness = false
+
+[[bin]]
+name = "rtc"
+path = "src/rtc.rs"
+harness = false
+
+[[bin]]
+name = "spi"
+path = "src/spi.rs"
+harness = false
+
+[[bin]]
+name = "subghz"
+path = "src/subghz.rs"
+harness = false
+
+[[bin]]
+name = "uart"
+path = "src/uart.rs"
+harness = false
+
+[dependencies]
+aes-gcm = { version = "0.10", default-features = false, features = ["aes"] }
+cortex-m-rt = "0.7"
+defmt = "0.3"
+defmt-rtt = "0.3"
+defmt-test = "0.3"
+ecdsa = { version = "0.14", default-features = false, features = ["arithmetic", "hazmat"] }
+embedded-time = "0.12"
+hex-literal = "0.3"
+itertools = { version = "0.10", default-features = false }
+nb = "1"
+p256 = { version = "0.11", default-features = false, features = ["arithmetic", "ecdsa"] }
+panic-probe = { version = "0.3", features = ["print-defmt" ] }
+rand = { version = "0.8", default-features = false }
+rand_chacha = { version = "0.3", default-features = false }
+static_assertions = "1"
+
+[dependencies.nucleo-wl55jc-bsp]
+path = "../nucleo-wl55jc-bsp"
+features = ["stm32wl5x_cm4", "defmt", "rt", "chrono"]
