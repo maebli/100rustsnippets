@@ -43,7 +43,7 @@ features = [
     # optional: use the real time clock (RTC)
     "chrono",
 ]
-```
+
 
 ## Examples
 
