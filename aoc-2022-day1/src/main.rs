@@ -25,7 +25,9 @@ fn get_elf_with_most_calories(input:&str) -> (u32,u32,u32) {
 
     calories.sort();
     
-    (calories.pop().unwrap(),calories.pop().unwrap(),calories.pop().unwrap())
+    (calories.pop().unwrap_or(0),
+     calories.pop().unwrap_or(0),
+     calories.pop().unwrap_or(0))
 
 }
 
