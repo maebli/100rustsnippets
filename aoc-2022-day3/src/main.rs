@@ -1,4 +1,5 @@
 use std::collections::{HashSet};
+use itertools::{Itertools};
 
 fn main() {
 
@@ -7,9 +8,30 @@ fn main() {
             .map(get_priority_of_item)
             .sum();
     
-    println!("{}", answer);
+    println!("solution 1: {}", answer);
+
+    let answer:u64 = include_str!("../input.txt").lines()
+            .tuples()
+            .map(find_badge_of_group)
+            .map(get_priority_of_item)
+            .sum();
+
+    println!("solution 2: {}", answer);
 }
 
+fn  find_badge_of_group(group:(&str,&str,&str))-> u8 {
+    let e1 : HashSet<char> = group.0.chars().collect();
+    let e2 : HashSet<char> = group.1.chars().collect();
+    let e3 : HashSet<char> = group.2.chars().collect();
+    e1.intersection(&e2)
+        .copied()
+        .collect::<HashSet<_>>()
+        .intersection(&e3)
+        .copied()
+        .next()
+        .unwrap_or_else(|| panic!("no intersection found"))
+        as u8
+}
 fn find_only_uniqe_item_in_rucksack(rucksack:&str) -> u8 {
 
     let left_compartment:HashSet<char> = rucksack[..(rucksack.len()-1)/2+1].chars().collect();
