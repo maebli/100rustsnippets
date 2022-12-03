@@ -1,45 +1,90 @@
 use std::cmp::Ordering;
 
+
+const POINTS_FOR_WIN:u32 = 6;
+const POINTS_FOR_DRAW:u32 = 3;
+const POINTS_FOR_LOSS:u32 = 0;
+
+
 fn main() {
-   let input = include_str!("../input.txt");
+   println!("{} ", GameMove::get_sum_part1(include_str!("../input.txt")));
+   println!("{} ", GameMove::get_sum_part2(include_str!("../input.txt")));
 }
-#[derive(PartialOrd, PartialEq, Debug,Eq)]
+#[derive(PartialOrd, PartialEq, Debug,Eq,Clone)]
 enum GameMove {
     Paper,
     Rock,
     Scissors,
 }
 
+
+
 impl GameMove {
     fn from(i:char) -> Self {
         match i {
-            'X'|'A' => GameMove::Paper,
-            'Y'|'B' => GameMove::Rock,
+            'X'|'A' => GameMove::Rock,
+            'Y'|'B' => GameMove::Paper,
             'Z'|'C' => GameMove::Scissors,
             _ => panic!("Invalid input"),
         }
     }
 
-    fn value(&self) -> i32 {
+    fn value(&self) -> u32 {
         match self {
-            GameMove::Paper => 3,
-            GameMove::Rock => 6,
-            GameMove::Scissors => 2,
+            GameMove::Rock => 1,
+            GameMove::Paper => 2,
+            GameMove::Scissors => 3,
         }
     }
 
-    fn read_moves(input:&str) -> Vec<(std::cmp::Ordering,i32)>{
+    fn read_moves(input:&str) -> Vec<((std::cmp::Ordering,u32),(std::cmp::Ordering,u32))>{
         input.lines().map(|line| {
             let mut parts = line.split_whitespace();
-            let a = GameMove::from(parts.next().unwrap().chars().next().unwrap());
-            let b = GameMove::from(parts.next().unwrap().chars().next().unwrap());
-            let res = a.cmp(&b);
-            match res {
-                Ordering::Equal => (res,0),
-                Ordering::Greater => (res,b.value()),
-                Ordering::Less => (res,0),
-            }
+            let oponent_move = GameMove::from(parts.next().unwrap().chars().next().unwrap());
+            let second_input = parts.next().unwrap().chars().next().unwrap();
+            let your_move_part1 = GameMove::from(second_input);
+            let your_move_part2 = oponent_move.from_ordering(second_input);
+            let res_part2 = your_move_part2.cmp(&oponent_move);
+            let res_part1= your_move_part1.cmp(&oponent_move);
+            let points_part2=match res_part2 {
+                Ordering::Equal => (res_part2,your_move_part2.value()+POINTS_FOR_DRAW),
+                Ordering::Greater => (res_part2,your_move_part2.value()+POINTS_FOR_WIN),
+                Ordering::Less => (res_part2,your_move_part2.value()+POINTS_FOR_LOSS),
+            };
+            let points_part1=match res_part1 {
+                Ordering::Equal => (res_part1,your_move_part1.value()+POINTS_FOR_DRAW),
+                Ordering::Greater => (res_part1,your_move_part1.value()+POINTS_FOR_WIN),
+                Ordering::Less => (res_part1,your_move_part1.value()+POINTS_FOR_LOSS),
+            };
+            (points_part1,points_part2)
         }).collect()
+    }
+
+    fn get_sum_part1(input:&str) -> u32 {
+        GameMove::read_moves(input).iter().map(|(a,_)| a.1).sum()
+    }
+
+    fn get_sum_part2(input:&str) -> u32 {
+        GameMove::read_moves(input).iter().map(|(_,a)| a.1).sum()
+    }
+
+    fn from_ordering(&self,i:char) -> GameMove {
+        match i {
+            'Z' => {
+                match *self {
+                    GameMove::Rock => GameMove::Paper,
+                    GameMove::Paper => GameMove::Scissors,
+                    GameMove::Scissors => GameMove::Rock,
+                }
+            }
+            'Y' => self.clone(),
+            'X' => match *self {
+                GameMove::Rock => GameMove::Scissors,
+                GameMove::Paper => GameMove::Rock,
+                GameMove::Scissors => GameMove::Paper,
+            },
+            _ => panic!("Invalid input"),
+        }
     }
 }
 
@@ -81,11 +126,14 @@ mod tests {
         assert_eq!(GameMove::Paper.cmp(&GameMove::Rock), Ordering::Greater);
         assert_eq!(GameMove::Paper.cmp(&GameMove::Scissors), Ordering::Less);
         assert_eq!(GameMove::Rock.cmp(&GameMove::Scissors), Ordering::Greater);
+        assert_eq!(GameMove::Rock.cmp(&GameMove::Paper), Ordering::Less);
+        assert_eq!(GameMove::Rock.cmp(&GameMove::Rock), Ordering::Equal);
+        assert_eq!(GameMove::Scissors.cmp(&GameMove::Paper), Ordering::Greater);
+        assert_eq!(GameMove::Scissors.cmp(&GameMove::Rock), Ordering::Less);
+        assert_eq!(GameMove::Scissors.cmp(&GameMove::Scissors), Ordering::Equal);
     }
     #[test]
     fn testInput(){
-        let k=GameMove::read_moves(TEST_INPUT);
-        print!("{:?}",k)
-        
+        assert_eq!(GameMove::get_sum_part1(TEST_INPUT), 15);
     }
 }
