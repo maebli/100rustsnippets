@@ -50,6 +50,7 @@ fn move_crates<'a>(stacks: &'a mut HashMap<u64,Vec<char>>, input:&str) -> &'a mu
 
     let crates = stacks.get_mut(&origin).unwrap();
     let mut crates = crates.split_off(crates.len()-number as usize);
+    // comment out this line for second answer with crate mover 9001
     crates.reverse();
     stacks.get_mut(&destination).unwrap().append(& mut crates);
 
