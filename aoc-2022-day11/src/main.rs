@@ -18,10 +18,12 @@ fn main() {
             monkey
         })
         .collect::<Vec<Monkey>>();
+    
+    let factor = monkeys.iter().map(|x| x.test).product::<u64>();
 
     for _ in 0..NUMBER_OF_ROUNDS {
         for x in 0..monkeys.len() {
-            monkeys[x].inspect();
+            monkeys[x].inspect(factor);
             let throw = monkeys[x].throw();
             for (action, item_worry) in throw {
                 monkeys[action].add_worry(item_worry);
@@ -97,13 +99,22 @@ impl <'a>Monkey<'a>{
                     .unwrap()
                     .trim();
         
-        self.operation = match operation.chars().next().unwrap() {
+        self.test = lines.next()
+                        .unwrap()
+                        .split(" ")
+                        .last()
+                        .unwrap()
+                        .trim()
+                        .parse::<u64>()
+                        .unwrap();
+         
+         self.operation = match operation.chars().next().unwrap() {
             '*' => {
                 if operation.len() == 1 {
-                    Box::new(move |x| x*x)
+                    Box::new(move |x| (x*x))
                 } else {
                     let n = operation[2..].parse::<u64>().unwrap();
-                    Box::new(move |x| x*n)
+                    Box::new(move |x| (x*n))
                 }
 
             },
@@ -117,18 +128,7 @@ impl <'a>Monkey<'a>{
                 }
 
             _ => panic!("Invalid operation"),
-        };
-        
-
-        self.test = lines.next()
-                        .unwrap()
-                        .split(" ")
-                        .last()
-                        .unwrap()
-                        .trim()
-                        .parse::<u64>()
-                        .unwrap();
-            
+        };          
 
             
         self.action_on_success = lines.next()
@@ -151,10 +151,10 @@ impl <'a>Monkey<'a>{
     }
 
     // create new inspect method
-    fn inspect(& mut self) {
+    fn inspect(& mut self,factor:u64) {
         self.item_worry.iter_mut().for_each(|x| {
             *x = (self.operation)(*x);
-            *x = *x /3;
+            *x = *x % factor;
             self.inspection_count += 1;
         });
     }
