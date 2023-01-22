@@ -9,7 +9,7 @@ fn main() {
 
     let mut output = find_shortest_path(include_str!("../input.txt"),'a');
     output.sort();
-    println!("Ans2: {:?}", output.first());
+    println!("Ans: {:?}", output.first());
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
