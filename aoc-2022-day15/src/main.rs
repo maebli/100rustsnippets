@@ -1,8 +1,13 @@
 use std::{vec, collections::HashSet};
 
 fn main() {
-    let x = beacons_in_field_and_row(include_str!("../input.txt"), 2000000);
-    println!("{:?}",x);
+    let s = include_str!("../input.txt");
+    let x = beacons_in_field_and_row(s, 2000000);
+    println!("Answer 1: {:?}",x);
+
+    for i in 0..4000000 {
+        let k = beacons_in_field_and_row(s, i);
+    }
 
 }
 
@@ -45,6 +50,8 @@ fn get_points_in_row(probe: &Probe, row: i64) -> Vec<Point> {
     points
 }
 
+
+
 fn beacons_in_field_and_row(input: &str, row: i64) -> usize {
     let probes: Vec<Probe> = input.lines().map(parse_line).collect();
 
@@ -64,14 +71,24 @@ fn beacons_in_field_and_row(input: &str, row: i64) -> usize {
 }
 
 
+
+fn calculate_tuning_frequency(point:Point) -> i64 {
+    point.x*4000000 + point.y
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::beacons_in_field_and_row;
+    use crate::{beacons_in_field_and_row, calculate_tuning_frequency};
 
     #[test]
     fn count_beaconless_positions() {
         let out = beacons_in_field_and_row(include_str!("../test_input.txt"), 10);
         assert_eq!(out, 26);
-    }   
+    } 
+
+    #[test]
+    fn check_calculate_tuning_frequency(){
+        assert_eq!(calculate_tuning_frequency(crate::Point { x: 14, y: 11 }),56000011);
+    }
 }
 
